@@ -28,9 +28,9 @@ export default function Navbar() {
     <>
       <p data-announcement className="bg-teal px-2 py-1.5 text-center text-xs text-cream">Free shipping across India on orders over ₹3,000</p>
     <header className="sticky top-0 z-40 border-b border-stone/70 bg-cream/95 backdrop-blur">
-      <div className="relative mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-1 sm:px-3 lg:h-20 lg:px-8">
+      <div className="relative mx-auto flex h-16 max-w-[1440px] items-center justify-between px-0.5 sm:h-[72px] sm:px-3 lg:h-20 lg:px-8">
         <button className="icon-button lg:hidden" onClick={() => setOpen(true)} aria-label="Open menu"><Menu size={20} /></button>
-        <Link to="/" aria-label="Marbello home" className="absolute left-1/2 top-0 flex h-[72px] -translate-x-1/2 items-center lg:static lg:h-20 lg:translate-x-0"><BrandMark /></Link>
+        <Link to="/" aria-label="Marbello home" className="absolute left-1/2 top-0 flex h-16 -translate-x-1/2 items-center sm:h-[72px] lg:static lg:h-20 lg:translate-x-0"><BrandMark /></Link>
         <nav className="hidden min-w-0 flex-1 items-center justify-center gap-4 lg:flex xl:gap-6" aria-label="Collections">
           <NavLink to="/shop" className={link}>Shop</NavLink>
           {categories.map((c) => <NavLink key={c.slug} to={`/category/${c.slug}`} className={link}>{c.slug === 'home-decor' ? 'Home Decor' : c.name}</NavLink>)}
