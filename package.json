@@ -3,7 +3,36 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
-  "dependencies": { "lucide-react": "^0.462.0", "react": "^18.3.1", "react-dom": "^18.3.1", "react-router-dom": "^6.28.0" },
-  "devDependencies": { "@vitejs/plugin-react": "^4.3.3", "autoprefixer": "^10.4.20", "postcss": "^8.4.49", "tailwindcss": "^3.4.15", "vite": "^5.4.11" }
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:p1": "node --test tests/storeStorage.test.js",
+    "test:p1:browser": "node tests/p1-browser.mjs --catalog",
+    "test:p2": "node --test tests/storeStorage.test.js tests/cart.test.js tests/search.test.js",
+    "test:p2:browser": "node tests/p1-browser.mjs --p2 --catalog",
+    "test:p3": "node --test tests/storeStorage.test.js tests/cart.test.js tests/search.test.js tests/seo.test.js",
+    "test:p3:browser": "node tests/p1-browser.mjs --p2 --p3 --catalog",
+    "test:catalog": "node --test tests/storeStorage.test.js tests/cart.test.js tests/search.test.js tests/seo.test.js tests/catalog.test.js",
+    "test:catalog:browser": "node tests/p1-browser.mjs --p2 --p3 --catalog",
+    "test:checkout": "node --test tests/storeStorage.test.js tests/cart.test.js tests/search.test.js tests/seo.test.js tests/catalog.test.js tests/checkout.test.js",
+    "test:checkout:browser": "node tests/p1-browser.mjs --p2 --p3 --catalog",
+    "test:customer": "node --test tests/*.test.js",
+    "test:customer:browser": "node tests/p1-browser.mjs --p2 --p3 --catalog --customer",
+    "test:ui": "node tests/p1-browser.mjs --p2 --p3 --catalog --customer --ui-after",
+    "test:ui:motion": "node tests/p1-browser.mjs --catalog --ui-motion"
+  },
+  "dependencies": {
+    "lucide-react": "^0.462.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "vite": "^6.4.4"
+  }
 }

@@ -1,8 +1,19 @@
+@config "../tailwind.config.js";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html, body { overflow-x: hidden; }
+html, body { overflow-x: clip; }
 body { @apply bg-cream text-ink font-sans antialiased; }
 h1, h2, h3 { @apply font-serif font-medium tracking-tight; }
-:focus-visible { outline: 2px solid #1F1E1C; outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+:focus-visible { outline: 2px solid #243F3B; outline-offset: 3px; }
+input[type="radio"], input[type="checkbox"], input[type="range"] { @apply accent-teal; }
+input:focus-visible, textarea:focus-visible, select:focus-visible { @apply border-teal; }
+footer :focus-visible { outline-color: #FAF7F2; }
+.navbar-search-form:focus-within { border-color: #243F3B; box-shadow: 0 0 0 2px rgb(36 63 59 / 20%); }
+.navbar-search-form input:focus-visible { outline: none; }
+.navbar-search-panel :focus-visible:not(input) { outline: 2px solid #243F3B; outline-offset: 2px; }
+@starting-style { .navbar-search-panel { opacity: 0; transform: translateY(-4px); } }
+@layer components {
+  .icon-button { @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-teal transition-colors hover:bg-bone active:bg-stone/50; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

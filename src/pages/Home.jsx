@@ -1,3 +1,4 @@
+import ProductImage from '../components/ProductImage'
 import { Link } from 'react-router-dom'
 import { Gem, Hammer, ShieldCheck, Truck, Star } from 'lucide-react'
 import Button from '../components/Button'
@@ -5,7 +6,8 @@ import Section from '../components/Section'
 import ProductGrid from '../components/ProductGrid'
 import Newsletter from '../components/Newsletter'
 import useSEO from '../hooks/useSEO'
-import { products, categories, categoryImage } from '../data/products'
+import { categoryImage } from '../data/products'
+import { useCatalog } from '../context/CatalogContext'
 import { marbleArt } from '../utils/marble'
 
 const why = [
@@ -21,29 +23,32 @@ const reviews = [
 ]
 
 export default function Home() {
+  const { products, categories } = useCatalog()
   useSEO({ title: 'Handcrafted Marble Homeware', description: 'Shop handcrafted marble cups, bowls, trays, clocks and decor. Natural Makrana marble, finished by hand.' })
   return (
     <>
       <section className="relative overflow-hidden bg-bone">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 sm:px-8 md:py-24 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl items-center gap-6 px-4 py-8 sm:px-6 lg:grid-cols-2 lg:py-10">
           <div className="animate-rise">
-            <h1 className="text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">Stone, shaped slowly by hand.</h1>
-            <p className="mt-6 max-w-md text-lg text-taupe">Cups, bowls, trays and clocks carved from natural marble. No two veins are alike.</p>
-            <div className="mt-8 flex flex-wrap gap-3"><Button to="/shop">Shop collection</Button><Button to="/about" variant="outline">Our story</Button></div>
+            <p className="mb-3 text-xs uppercase tracking-[0.25em] text-ink">The Marbello collection</p>
+            <h1 className="text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">Natural stone.<br />Everyday elegance.</h1>
+            <p className="mt-4 max-w-md text-base text-ink/75">Thoughtfully shaped marble for your kitchen, your rituals and the spaces you call home.</p>
+            <div className="mt-5 flex flex-wrap gap-3"><Button to="/shop">Shop collection</Button></div>
           </div>
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md lg:max-w-none">
-            <img src={marbleArt(41, 'white', 'bowl')} alt="Hand-carved white marble bowl" className="absolute right-0 top-0 h-[88%] w-[78%] object-cover shadow-xl animate-rise" />
-            <img src={marbleArt(52, 'black', 'cup')} alt="Black marble mug with gold veins" className="absolute bottom-0 left-0 h-[52%] w-[46%] border-4 border-bone object-cover shadow-xl" />
+          <div className="relative mx-auto aspect-[16/9] w-full max-w-sm sm:max-w-md lg:h-[340px] lg:max-w-lg lg:aspect-auto">
+            <ProductImage src={marbleArt(41, 'white', 'bowl')} alt="Hand-carved white marble bowl" className="absolute right-0 top-0 h-[88%] w-[78%] object-cover shadow-xl animate-rise" />
+            <ProductImage src={marbleArt(52, 'black', 'cup')} alt="Black marble mug with gold veins" className="absolute bottom-0 left-0 h-[52%] w-[46%] border-4 border-bone object-cover shadow-xl" />
           </div>
         </div>
       </section>
 
       <Section title="Shop by category">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
           {categories.map((c) => (
             <Link key={c.slug} to={`/category/${c.slug}`} className="group">
-              <div className="aspect-[3/4] overflow-hidden bg-bone"><img src={categoryImage(c)} alt={`${c.name} in marble`} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /></div>
-              <h3 className="mt-3 text-xl">{c.name}</h3>
+              <div className="aspect-[4/3] overflow-hidden rounded-lg bg-bone"><ProductImage src={categoryImage(c)} alt={`${c.name} in marble`} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-105" /></div>
+              <h3 className="mt-2 text-lg">{c.name}</h3>
+              <p className="mt-1 text-xs text-ink/70">{products.filter((p) => p.category === c.slug).length} pieces</p>
             </Link>
           ))}
         </div>
@@ -57,46 +62,35 @@ export default function Home() {
         <ProductGrid products={products.filter((p) => p.isNew).slice(0, 4)} />
       </Section>
 
-      <section className="bg-ink text-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-2">
-          <img src={marbleArt(77, 'black', 'decor')} alt="Artisan-carved black marble vase" loading="lazy" className="aspect-[4/5] w-full object-cover" />
-          <div>
-            <h2 className="text-4xl sm:text-5xl">Born in the quarries of Makrana</h2>
-            <p className="mt-6 max-w-lg text-stone">The same stone that built the Taj Mahal, now shaped into things you use every day. Our artisans carve, grind and polish each piece over several days, so every cup and clock carries its own veining.</p>
-            <Button to="/about" variant="light" className="mt-8">Read our story</Button>
-          </div>
-        </div>
-      </section>
-
-      <Section title="Why Veina">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <Section title="The Marbello approach">
+        <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
           {why.map(([Icon, t, d]) => (
-            <div key={t}><Icon strokeWidth={1.2} size={32} /><h3 className="mt-4 text-2xl">{t}</h3><p className="mt-2 text-sm text-taupe">{d}</p></div>
+            <div key={t}><Icon strokeWidth={1.2} size={32} /><h3 className="mt-3 text-xl">{t}</h3><p className="mt-2 text-sm text-ink/75">{d}</p></div>
           ))}
         </div>
       </Section>
 
-      <section className="bg-bone/60 py-16 md:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 sm:px-8 md:grid-cols-2">
+      <section className="bg-bone/60 py-9 md:py-12">
+        <div className="mx-auto grid max-w-7xl items-center gap-6 px-4 sm:px-6 md:grid-cols-2">
           <div className="grid grid-cols-2 gap-4">
-            <img src={marbleArt(90, 'beige', 'tray')} alt="Beige marble tray styled on a table" loading="lazy" className="mt-8 aspect-[3/4] w-full object-cover" />
-            <img src={marbleArt(91, 'green', 'cup')} alt="Green marble tumbler in a kitchen" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+            <ProductImage src={marbleArt(90, 'beige', 'tray')} alt="Beige marble tray styled on a table" loading="lazy" className="mt-4 aspect-square w-full object-cover" />
+            <ProductImage src={marbleArt(91, 'green', 'cup')} alt="Green marble tumbler in a kitchen" loading="lazy" className="aspect-square w-full object-cover" />
           </div>
           <div>
-            <h2 className="text-4xl sm:text-5xl">Made for the way you live</h2>
-            <p className="mt-5 max-w-md text-taupe">Morning coffee, a cheese board on Friday, a clock that watches over the room. Marble belongs in daily rituals, not behind glass.</p>
-            <Button to="/shop" variant="outline" className="mt-8">Shop the collection</Button>
+            <h2 className="text-3xl sm:text-4xl">Made for the way you live</h2>
+            <p className="mt-5 max-w-md text-ink/75">Morning coffee, a cheese board on Friday, a clock that watches over the room. Marble belongs in daily rituals, not behind glass.</p>
+            <Button to="/shop" variant="outline" className="mt-5">Shop the collection</Button>
           </div>
         </div>
       </section>
 
       <Section title="Kind words">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-3">
           {reviews.map(([n, c, t]) => (
-            <figure key={n} className="border border-stone p-7">
-              <div className="flex gap-0.5" aria-label="5 out of 5 stars">{[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-ink" />)}</div>
+            <figure key={n} className="rounded-lg border border-stone p-5">
+              <div className="flex gap-0.5" aria-label="5 out of 5 stars">{[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-gold text-gold" />)}</div>
               <blockquote className="mt-4 font-serif text-xl leading-snug">{t}</blockquote>
-              <figcaption className="mt-5 text-sm text-taupe">{n}, {c}</figcaption>
+              <figcaption className="mt-5 text-sm text-ink/75">{n}, {c}</figcaption>
             </figure>
           ))}
         </div>

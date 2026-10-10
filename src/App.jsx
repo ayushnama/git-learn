@@ -6,8 +6,11 @@ import Home from './pages/Home'
 import Shop from './pages/Shop'
 import ProductDetails from './pages/ProductDetails'
 import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import Auth from './pages/Auth'
+import { Profile, Addresses, Orders, OrderDetails } from './pages/Customer'
 import Wishlist from './pages/Wishlist'
-import { About, Contact, FAQ, Shipping, Privacy, Terms, NotFound } from './pages/Info'
+import { Contact, FAQ, Shipping, Privacy, Terms, NotFound } from './pages/Info'
 
 export default function App() {
   const { pathname } = useLocation()
@@ -23,8 +26,14 @@ export default function App() {
           <Route path="/search" element={<Shop mode="search" />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/login" element={<Auth key="login" />} />
+          <Route path="/signup" element={<Auth key="signup" signup />} />
+          <Route path="/account/profile" element={<Profile />} />
+          <Route path="/account/addresses" element={<Addresses />} />
+          <Route path="/account/orders" element={<Orders />} />
+          <Route path="/account/orders/:id" element={<OrderDetails />} />
           <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/shipping-returns" element={<Shipping />} />
